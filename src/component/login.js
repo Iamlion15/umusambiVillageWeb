@@ -32,7 +32,7 @@ const Login = () => {
                     localStorage.setItem("token", JSON.stringify(data.token))
                     console.log(localStorage.getItem("token"))
                     if (data.hasOwnProperty("token")) {
-                        navigate("admindashboard")
+                        navigate("admin")
                     }
                     else {
                         setMsg("incorrect password or email")
@@ -58,7 +58,7 @@ const Login = () => {
                     type="password"
                     onChange={(e) => setData({ ...data, password: e.target.value })}
                 />
-                <input type="submit" value="login" />
+                <input type="submit" value="login" className="btn btn-primary"/>
             </form>
         </>
     )

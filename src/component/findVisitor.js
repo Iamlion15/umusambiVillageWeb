@@ -1,13 +1,16 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import Visitordetails from "./visitorDetails";
 
-const Findvisitor=()=>{
+const Findvisitor=({onNext,setVisitordata})=>{
     const [data,setData]=useState({
         nID: '',
     });
+    const[visitor,setVisitor]=useState({});
     const[show,setShow]=useState(false);
     const [message, setMessage] = useState('');
+    const handleNext=()=>{
+        onNext();
+    }
     function submitHandler(event) {
         event.preventDefault();
         const requestOptions = {
@@ -21,8 +24,7 @@ const Findvisitor=()=>{
         console.log(requestOptions);
         fetch("http://localhost:7000/api/admin/findvisitor", requestOptions)
             .then((response) => {
-                if (!response.OK) {
-                    console.log(response);
+                if (!response.ok) {
                     setMessage("an error occured")
                 }
                 return response.json();
@@ -35,7 +37,8 @@ const Findvisitor=()=>{
                 else{
                     if(data.code==="yes")
                     {
-                        setData(data.message)
+                        setVisitor(data.message)
+                        setVisitordata(data.message)
                         setShow(true);
                     }
                 }
@@ -55,12 +58,10 @@ const Findvisitor=()=>{
                 <input type="submit" value="FIND VISITOR" />
             </form>
         <div>
-            {show ? <Visitordetails data={data}/>:null}
+            {show ? <Visitordetails data={visitor}/>:null}
             
             {show? <div>
-                <Link to="">
-                <button>PROCEED WITH THE BOOKING</button>
-                </Link>
+                <button onClick={handleNext}>PROCEED WITH THE BOOKING</button>
                 </div>
                 :null}
         </div>

@@ -23,7 +23,7 @@ const AddVisitor = () => {
         }
         fetch("http://localhost:7000/api/admin/addvisitor", requestOptions)
             .then((response) => {
-                if (!response.OK) {
+                if (!response.ok) {
                     setMessage("You have been registered successfully")
                 }
                 else {
